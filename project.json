@@ -1,0 +1,23 @@
+{
+  "overview": "An anime video streaming platform with a public browse grid, video player, user watchlists via Internet Identity, and a fully-functional admin panel for uploading and managing videos. Features a dark gray, black, and white theme.",
+  "features": [
+    "Browse anime videos in a responsive grid with genre filters and search",
+    "Full HTML5 video player with play, pause, volume, fullscreen controls",
+    "Admin panel to upload, edit, and delete videos with metadata",
+    "Internet Identity login for user watchlist and admin access",
+    "Genre badges and filtering (Action, Adventure, Comedy, Romance, Fantasy, etc.)",
+    "Video upload with thumbnail and cover image via object storage",
+    "Delete confirmation dialogs and upload progress indicators",
+    "Grayscale dark theme (black, dark gray, white)"
+  ],
+  "category": "entertainment",
+  "tags": [
+    "anime",
+    "streaming",
+    "video",
+    "admin-panel",
+    "dark-theme",
+    "watchlist"
+  ],
+  "last_updated": "2026-05-01T21:23:44.495Z"
+}

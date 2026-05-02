@@ -1,0 +1,106 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type VideoSummary = 
+ record {
+   coverImage: ExternalBlob;
+   episodeCount: nat;
+   genre: Genre;
+   id: VideoId;
+   title: text;
+   uploadedAt: int;
+ };
+type VideoId = nat;
+type Video = 
+ record {
+   coverImage: ExternalBlob;
+   description: text;
+   episodeCount: nat;
+   genre: Genre;
+   id: VideoId;
+   title: text;
+   uploadedAt: int;
+   videoFile: ExternalBlob;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UpdateVideoRequest = 
+ record {
+   coverImage: ExternalBlob;
+   description: text;
+   episodeCount: nat;
+   genre: Genre;
+   title: text;
+ };
+type Genre = 
+ variant {
+   Action;
+   Adventure;
+   Comedy;
+   Drama;
+   Fantasy;
+   Romance;
+   School;
+   SciFi;
+   Supernatural;
+ };
+type ExternalBlob = blob;
+type CreateVideoRequest = 
+ record {
+   coverImage: ExternalBlob;
+   description: text;
+   episodeCount: nat;
+   genre: Genre;
+   title: text;
+   videoFile: ExternalBlob;
+ };
+type AdminDashboard = 
+ record {
+   genreCounts: vec record {
+                      Genre;
+                      nat;
+                    };
+   totalVideos: nat;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  addToWatchlist: (videoId: VideoId) -> ();
+  adminCreateVideo: (req: CreateVideoRequest) -> (VideoId);
+  adminDeleteVideo: (id: VideoId) -> (bool);
+  adminGetDashboard: () -> (AdminDashboard) query;
+  adminListVideos: () -> (vec Video) query;
+  adminUpdateVideo: (id: VideoId, req: UpdateVideoRequest) -> (bool);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  getCallerUserRole: () -> (UserRole) query;
+  getMyWatchlist: () -> (vec VideoSummary) query;
+  getVideo: (id: VideoId) -> (opt Video) query;
+  isCallerAdmin: () -> (bool) query;
+  listVideos: () -> (vec VideoSummary) query;
+  listVideosByGenre: (genre: Genre) -> (vec VideoSummary) query;
+  removeFromWatchlist: (videoId: VideoId) -> ();
+  searchVideos: (searchTerm: text) -> (vec VideoSummary) query;
+  seedSampleData: () -> ();
+}

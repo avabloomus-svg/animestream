@@ -1,0 +1,68 @@
+// Version: 1.0.0
+type Data__159895909<T> = {var count : Nat__490723111; elements : [var ?T]};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type ExternalBlob__671167343 = Blob;
+type Genre__67647755 =
+  {
+    #Action;
+    #Adventure;
+    #Comedy;
+    #Drama;
+    #Fantasy;
+    #Romance;
+    #School;
+    #SciFi;
+    #Supernatural
+  };
+type Internal__667636161<T> =
+  {children : [var ?Node__92254746<T>]; data : Data__159895909<T>};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__520550824<T> = {data : Data__159895909<T>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Node__92254746<T> =
+  {#internal : Internal__667636161<T>; #leaf : Leaf__520550824<T>};
+type Set__532252804<T> = Set__710576254<T>;
+type Set__710576254<T> =
+  {var root : Node__92254746<T>; var size : Nat__490723111};
+type UserRole__1073662873 = {#admin; #guest; #user};
+type VideoId__453918712 = Nat;
+type VideoInternal__943654979 =
+  {
+    coverImage : ExternalBlob__671167343;
+    description : Text;
+    episodeCount : Nat;
+    genre : Genre__67647755;
+    id : VideoId__453918712;
+    title : Text;
+    uploadedAt : Int;
+    videoFile : ExternalBlob__671167343
+  };
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  stable var nextVideoId : Nat;
+  stable videos :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?VideoInternal__943654979]];
+      var elementIndex : Nat__490723111
+    };
+  stable watchlists :
+    {
+      var root : Node__46230540<Principal, Set__532252804<VideoId__453918712>>;
+      var size : Nat__490723111
+    }
+};
